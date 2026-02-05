@@ -1,8 +1,15 @@
 {
   "name": "iconex",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Framework-agnostic icon data library with multiple categories and variants",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shohanux1/iconex-react.git",
+    "directory": "packages/iconex"
+  },
+  "homepage": "https://github.com/shohanux1/iconex-react",
+  "bugs": "https://github.com/shohanux1/iconex-react/issues",
   "sideEffects": false,
   "type": "module",
   "main": "./dist/index.cjs",
