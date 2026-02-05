@@ -1,0 +1,49 @@
+{
+  "name": "iconex",
+  "version": "0.1.1",
+  "description": "Framework-agnostic icon data library with multiple categories and variants",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./icons/*": {
+      "import": {
+        "types": "./dist/icons/*.d.ts",
+        "default": "./dist/icons/*.js"
+      },
+      "require": {
+        "types": "./dist/icons/*.d.cts",
+        "default": "./dist/icons/*.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "rimraf": "^6.0.0"
+  },
+  "keywords": ["icons", "svg", "icon-library", "iconex"]
+}
