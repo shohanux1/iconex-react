@@ -14,3 +14,6 @@ packages/iconex-react/src/dynamicIconImports.ts
 
 # Test app
 test-app/
+
+# Doc site (separate repo: iconex-home)
+doc/

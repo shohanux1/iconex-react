@@ -49,7 +49,11 @@ function main() {
 
       for (const variant of variants) {
         const svgContent = readSvgFile(ICONS_DIR, iconName, category, variant);
-        const parsed = parseSvgToIconNodes(svgContent);
+        // Create a short unique prefix: ix-{icon}-{cat initial}-{variant abbr}-
+        const catAbbr = category[0]; // r, s, c
+        const varAbbr = variant.replace(/[aeiou-]/g, '').slice(0, 2); // bl, bk, lb, lo, br, tt
+        const idPrefix = `ix-${iconName}-${catAbbr}-${varAbbr}-`;
+        const parsed = parseSvgToIconNodes(svgContent, idPrefix);
         viewBox = parsed.viewBox;
 
         const nodesStr = JSON.stringify(parsed.nodes, null, 6)

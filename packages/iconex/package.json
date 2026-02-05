@@ -1,6 +1,6 @@
 {
   "name": "iconex",
-  "version": "0.1.2",
+  "version": "0.1.8",
   "description": "Framework-agnostic icon data library with multiple categories and variants",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/shohanux1/iconex-react.git",
     "directory": "packages/iconex"
   },
-  "homepage": "https://github.com/shohanux1/iconex-react",
+  "homepage": "https://iconex-home.vercel.app",
   "bugs": "https://github.com/shohanux1/iconex-react/issues",
   "sideEffects": false,
   "type": "module",

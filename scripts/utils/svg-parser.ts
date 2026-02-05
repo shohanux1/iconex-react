@@ -18,25 +18,39 @@ function isBlackColor(value: string): boolean {
   return v === '#000' || v === '#000000' || v === 'black';
 }
 
-/** Clean attributes: remove irrelevant attrs, replace black with currentColor */
-function cleanAttributes(attrs: Record<string, string>): Record<string, string> {
+/**
+ * Replace url(#id) references in an attribute value with prefixed versions.
+ */
+function prefixUrlRefs(value: string, idPrefix: string): string {
+  return value.replace(/url\(#([^)]+)\)/g, `url(#${idPrefix}$1)`);
+}
+
+/** Clean attributes: remove irrelevant attrs, replace black with currentColor, prefix IDs */
+function cleanAttributes(attrs: Record<string, string>, idPrefix: string): Record<string, string> {
   const clean: Record<string, string> = {};
   for (const [key, value] of Object.entries(attrs)) {
     const keyLower = key.toLowerCase();
     if (
       keyLower === 'xmlns' ||
-      keyLower === 'id' ||
       keyLower === 'class' ||
       keyLower === 'data-name' ||
-      keyLower === 'style' ||
       keyLower.startsWith('xmlns:')
     ) {
       continue;
     }
-    if ((key === 'fill' || key === 'stroke') && isBlackColor(value)) {
+    // Prefix id attributes to avoid collisions between icons
+    if (keyLower === 'id') {
+      clean[key] = `${idPrefix}${value}`;
+    } else if ((key === 'fill' || key === 'stroke') && isBlackColor(value)) {
       clean[key] = 'currentColor';
-    } else {
+    } else if (keyLower === 'style' && value.includes('mask-type')) {
+      // Preserve mask-type style as it's needed for mask rendering
       clean[key] = value;
+    } else if (keyLower === 'style') {
+      continue;
+    } else {
+      // Prefix any url(#...) references in attribute values
+      clean[key] = prefixUrlRefs(value, idPrefix);
     }
   }
   return clean;
@@ -46,8 +60,11 @@ function cleanAttributes(attrs: Record<string, string>): Record<string, string> 
  * Parse an SVG string and extract all child elements as a tree of
  * [tag, attributes] or [tag, attributes, children] tuples.
  * Strips the outer <svg> wrapper.
+ *
+ * @param svgString The raw SVG markup
+ * @param idPrefix  A unique prefix for IDs to avoid collisions (e.g., "ix-bag-r-lo-")
  */
-export function parseSvgToIconNodes(svgString: string): ParseResult {
+export function parseSvgToIconNodes(svgString: string, idPrefix: string = ''): ParseResult {
   let viewBox = '0 0 24 24';
   let insideSvg = false;
 
@@ -68,7 +85,7 @@ export function parseSvgToIconNodes(svgString: string): ParseResult {
       if (!insideSvg) return;
 
       const tag = name.toLowerCase();
-      const cleanAttrs = cleanAttributes(attrs);
+      const cleanAttrs = cleanAttributes(attrs, idPrefix);
       const node: NodeTuple = [tag, cleanAttrs];
       const children: NodeTuple[] = [];
 

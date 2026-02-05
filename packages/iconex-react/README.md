@@ -4,7 +4,7 @@ Beautiful, customizable icon components for React and Next.js.
 
 ## Features
 
-- 125+ icons with named exports
+- 130+ icons with named exports
 - 3 categories: `regular`, `sharp`, `curved`
 - 6 variants: `bold`, `bulk`, `light-border`, `light-outline`, `broken`, `two-tone`
 - Customizable color, size, and stroke width via props or CSS

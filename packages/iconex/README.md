@@ -6,7 +6,7 @@ Framework-agnostic icon data library with multiple categories and variants.
 
 Iconex provides SVG icon data as lightweight `[tag, attributes]` tuples. It serves as the core data layer — use it with any framework or with the official [iconex-react](https://www.npmjs.com/package/iconex-react) wrapper.
 
-- 125+ icons
+- 130+ icons
 - 3 categories: `regular`, `sharp`, `curved`
 - 6 variants: `bold`, `bulk`, `light-border`, `light-outline`, `broken`, `two-tone`
 - Full TypeScript support

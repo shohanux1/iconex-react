@@ -1,6 +1,6 @@
 {
   "name": "iconex-react",
-  "version": "0.1.2",
+  "version": "0.1.8",
   "description": "React components for iconex icons — use in React and Next.js",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/shohanux1/iconex-react.git",
     "directory": "packages/iconex-react"
   },
-  "homepage": "https://github.com/shohanux1/iconex-react",
+  "homepage": "https://iconex-home.vercel.app",
   "bugs": "https://github.com/shohanux1/iconex-react/issues",
   "sideEffects": false,
   "type": "module",

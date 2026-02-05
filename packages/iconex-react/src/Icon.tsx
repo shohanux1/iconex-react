@@ -50,10 +50,28 @@ const SVG_ATTR_MAP: Record<string, string> = {
   'stop-opacity': 'stopOpacity',
 };
 
-function toReactAttrs(attrs: Record<string, string>): Record<string, string> {
+/** Parse inline style string to React style object */
+function parseStyleToObject(style: string): Record<string, string> {
   const result: Record<string, string> = {};
+  for (const part of style.split(';')) {
+    const [prop, val] = part.split(':').map(s => s.trim());
+    if (prop && val) {
+      // Convert CSS property to camelCase (e.g., mask-type -> maskType)
+      const camelProp = prop.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      result[camelProp] = val;
+    }
+  }
+  return result;
+}
+
+function toReactAttrs(attrs: Record<string, string>): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(attrs)) {
-    result[SVG_ATTR_MAP[key] ?? key] = value;
+    if (key === 'style') {
+      result.style = parseStyleToObject(value);
+    } else {
+      result[SVG_ATTR_MAP[key] ?? key] = value;
+    }
   }
   return result;
 }
@@ -108,10 +126,6 @@ const Icon = forwardRef<SVGSVGElement, InternalIconProps>(
     const iconNodes = categoryData?.[resolvedVariant];
 
     if (!iconNodes) {
-      /* eslint-disable no-console */
-      console.warn(
-        `[iconex] Icon "${__iconMeta.name}" does not have variant "${resolvedVariant}" in category "${resolvedCategory}".`,
-      );
       return null;
     }
 
